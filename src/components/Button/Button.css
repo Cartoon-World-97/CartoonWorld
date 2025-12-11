@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+.button{
+    /* background-color:  linear-gradient(100deg, #0400b4 , #ca2234); */
+
+    background-color: #0400b4 ;
+    color: #ffff;
+    font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+ font-size: 18px;
+
+ width: 150px;
+ height: 43px;
+}
+.button:hover{
+    /* background-color:  linear-gradient(100deg, #0400b4 , #ca2234); */
+
+    background-color: transparent  ;
+    border: 1px solid #ffff;
+    
+}
