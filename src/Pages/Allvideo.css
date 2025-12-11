@@ -1,0 +1,11 @@
+.videos-grid {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); */
+  grid-template-columns: auto auto auto auto auto auto auto;
+  /* grid-template-rows: max-content; */
+  gap: 2rem;
+}
+.videos-grid .cartoon-card {
+  max-width: 160px;
+}
+
