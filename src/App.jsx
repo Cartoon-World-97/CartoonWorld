@@ -27,10 +27,8 @@ function App() {
       path: "/",
       element: (
         <>
-          <ProtectedRoute>
             <Scrolltotop />
             <Home />
-          </ProtectedRoute>
         </>
       ),
     },
