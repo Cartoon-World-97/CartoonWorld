@@ -20,6 +20,11 @@ import { SearchProvider } from "./context/SearchContext";
 import Profile from "./Pages/Profile";
 import Movie from "./Pages/Movie";
 import Playlist from "./Pages/Playlist";
+import Payment from "./Pages/Payment";
+import Plans from "./Pages/Plans";
+import { ToastContainer } from "react-toastify";
+
+// In your App component
 
 function App() {
   const router = createBrowserRouter([
@@ -61,7 +66,7 @@ function App() {
         </ProtectedRoute>
       ),
     },
-     {
+    {
       path: "/movie",
       element: (
         <ProtectedRoute>
@@ -71,11 +76,7 @@ function App() {
     },
     {
       path: "/mylist",
-      element: (
-        <ProtectedRoute>
-          <Playlist />
-        </ProtectedRoute>
-      ),
+      element: <Playlist />,
     },
     {
       path: "/category",
@@ -85,19 +86,34 @@ function App() {
         </ProtectedRoute>
       ),
     },
-     {
-      path: "/payments",
+    {
+      path: "/Testpayments",
       element: (
         <ProtectedRoute>
           <PayPalButton />
         </ProtectedRoute>
       ),
-    },{
-      path: "/profile",
+    },
+    {
+      path: "/payments",
       element: (
         <ProtectedRoute>
-          <Profile />
+          <Payment />
         </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/plans",
+      element: (
+        <ProtectedRoute>
+          <Plans />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/profile",
+      element: (
+          <Profile />
       ),
     },
     {
@@ -130,12 +146,24 @@ function App() {
       element: <Setpass />,
     },
   ]);
-
-  // return <RouterProvider router={router} />
   return (
-    <SearchProvider>
-      <RouterProvider router={router} />
-    </SearchProvider>
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <SearchProvider>
+        <RouterProvider router={router} />
+      </SearchProvider>
+    </>
   );
 }
 
