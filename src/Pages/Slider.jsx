@@ -4,84 +4,84 @@ import "./Slider.css";
 import Card from "../components/Card/Card";
 import Titlecard from "../components/Titlecard/Titlecard";
 
-const Slider = ({ istitleCard, isCard }) => {
+const Slider = ({cartoons,heading,istitleCard, isCard }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(7);
   const [isHovered, setIsHovered] = useState(false);
-  const cartoons = [
-    {
-      id: 1,
-      title: "Adventure Quest",
-      genre: "Action",
-      rating: "8.5/10",
-      year: "2024",
-      image: "https://picsum.photos/400/250?random=1",
-      description: "Epic adventures await in this thrilling action series",
-    },
-    {
-      id: 2,
-      title: "Magical Kingdom",
-      genre: "Fantasy",
-      rating: "9.2/10",
-      year: "2024",
-      image: "https://picsum.photos/400/250?random=2",
-      description: "Enter a world of magic and wonder",
-    },
-    {
-      id: 3,
-      title: "Space Explorers",
-      genre: "Sci-Fi",
-      rating: "8.8/10",
-      year: "2024",
-      image: "https://picsum.photos/400/250?random=3",
-      description: "Journey through the cosmos with brave explorers",
-    },
-    {
-      id: 4,
-      title: "Ocean Mysteries",
-      genre: "Adventure",
-      rating: "8.7/10",
-      year: "2024",
-      image: "https://picsum.photos/400/250?random=4",
-      description: "Dive deep into underwater adventures",
-    },
-    {
-      id: 5,
-      title: "Forest Friends",
-      genre: "Comedy",
-      rating: "8.4/10",
-      year: "2024",
-      image: "https://picsum.photos/400/250?random=5",
-      description: "Hilarious tales from the enchanted forest",
-    },
-    {
-      id: 6,
-      title: "Time Travelers",
-      genre: "Adventure",
-      rating: "9.0/10",
-      year: "2024",
-      image: "https://picsum.photos/400/250?random=6",
-      description: "Travel through time in this exciting series",
-    },
-    {
-      id: 7,
-      title: "Dragon Tales",
-      genre: "Fantasy",
-      rating: "8.9/10",
-      year: "2024",
-      image: "https://picsum.photos/400/250?random=7",
-      description: "Legendary tales of dragons and heroes",
-    },
-    {
-      id: 8,
-      title: "Super Heroes",
-      genre: "Action",
-      rating: "9.1/10",
-      year: "2024",
-      image: "https://picsum.photos/400/250?random=8",
-      description: "Heroes unite to save the world",
-    },
-  ];
+  // const cartoons = [
+  //   {
+  //     id: 1,
+  //     title: "Adventure Quest",
+  //     genre: "Action",
+  //     rating: "8.5/10",
+  //     year: "2024",
+  //     image: "https://picsum.photos/400/250?random=1",
+  //     description: "Epic adventures await in this thrilling action series",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Magical Kingdom",
+  //     genre: "Fantasy",
+  //     rating: "9.2/10",
+  //     year: "2024",
+  //     image: "https://picsum.photos/400/250?random=2",
+  //     description: "Enter a world of magic and wonder",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Space Explorers",
+  //     genre: "Sci-Fi",
+  //     rating: "8.8/10",
+  //     year: "2024",
+  //     image: "https://picsum.photos/400/250?random=3",
+  //     description: "Journey through the cosmos with brave explorers",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Ocean Mysteries",
+  //     genre: "Adventure",
+  //     rating: "8.7/10",
+  //     year: "2024",
+  //     image: "https://picsum.photos/400/250?random=4",
+  //     description: "Dive deep into underwater adventures",
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Forest Friends",
+  //     genre: "Comedy",
+  //     rating: "8.4/10",
+  //     year: "2024",
+  //     image: "https://picsum.photos/400/250?random=5",
+  //     description: "Hilarious tales from the enchanted forest",
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "Time Travelers",
+  //     genre: "Adventure",
+  //     rating: "9.0/10",
+  //     year: "2024",
+  //     image: "https://picsum.photos/400/250?random=6",
+  //     description: "Travel through time in this exciting series",
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "Dragon Tales",
+  //     genre: "Fantasy",
+  //     rating: "8.9/10",
+  //     year: "2024",
+  //     image: "https://picsum.photos/400/250?random=7",
+  //     description: "Legendary tales of dragons and heroes",
+  //   },
+  //   {
+  //     id: 8,
+  //     title: "Super Heroes",
+  //     genre: "Action",
+  //     rating: "9.1/10",
+  //     year: "2024",
+  //     image: "https://picsum.photos/400/250?random=8",
+  //     description: "Heroes unite to save the world",
+  //   },
+  // ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -125,7 +125,7 @@ const Slider = ({ istitleCard, isCard }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="section-header">
-        <h2 className="section-title">Trending Now</h2>
+        <h2 className="section-title">{heading}</h2>
         <a
           href="#"
           style={{
@@ -177,7 +177,7 @@ const Slider = ({ istitleCard, isCard }) => {
           >
             {cartoons.map((cartoon) => (
               <div
-                key={cartoon.id}
+                key={cartoon.Video_ID}
                 className="slide-item"
                 style={{
                   flex: `0 0 calc(${100 / itemsPerView}% - ${

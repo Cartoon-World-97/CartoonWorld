@@ -125,15 +125,8 @@ const Header = () => {
         </nav>
 
         {/* Search */}
-        <form onSubmit={handleSearch} className="search-wrapper">
+        <form onSubmit={handleSearch} className="search-wrapper d-none d-sm-block">
           <div className="search-bar">
-            {/* <input
-              type="text"
-              placeholder="Search for movies, shows..."
-              value={query}
-              onInput={(e) => handleInput(e.target.value)}
-              onFocus={() => query && setShowSuggestions(true)}
-            /> */}
             <input
               type="text"
               placeholder="Search for movies, shows..."
@@ -172,9 +165,9 @@ const Header = () => {
 
         {/* User Actions */}
         <div className="user-actions">
-          <button className="notification-btn">
+          {/* <button className="notification-btn">
             <i className="fas fa-bell"></i>
-          </button>
+          </button> */}
 
           {isLogin && (
             <div className="profile-dropdown dropdown">
@@ -201,6 +194,43 @@ const Header = () => {
           )}
         </div>
       </div>
+      <form onSubmit={handleSearch} className="search-wrapper d-block d-sm-none ">
+          <div className="search-bar mx-3 my-2">
+            <input
+              type="text"
+              placeholder="Search for movies, shows..."
+              value={query}
+              onInput={(e) => handleInput(e.target.value)}
+              onFocus={() => {
+                if (query.trim() === "") {
+                  fetchSuggestions(""); // Only fetch history when empty
+                }
+                setShowSuggestions(true);
+              }}
+            />
+
+            <i className="fas fa-search" onClick={handleSearch}></i>
+          </div>
+
+          {/* 🔥 Suggestions Dropdown */}
+          {showSuggestions && suggestions.length > 0 && (
+            <ul className="suggestion-box">
+              {suggestions.map((item, index) => (
+                <li
+                  key={index}
+                  onClick={() => {
+                    setQuery(item); // Auto-fill
+                    setSearchQuery(item);
+                    navigate("/search"); // Search immediately
+                    setShowSuggestions(false);
+                  }}
+                >
+                  <i className="fa-solid fa-clock-rotate-left pe-2"></i> {item}
+                </li>
+              ))}
+            </ul>
+          )}
+        </form>
     </header>
   );
 };

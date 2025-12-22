@@ -178,7 +178,6 @@
 @media (max-width: 768px) {
   .hero-banner {
     height: 50vh;
-    border-radius: 15px;
   }
 
   .hero-content {
