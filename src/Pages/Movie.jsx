@@ -1,24 +1,131 @@
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import Footer from "../components/Footer/Footer";
+
 import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import CartoonSlider from "./Slider";
+import ShimmerLine from "../utility/ShimmerLine";
+import httpClient from "../services/httpClient";
+
 import "./Movie.css";
+
 const Movie = () => {
+  const [sections, setSections] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [sectionsLoading, setSectionsLoading] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  const observer = useRef(null);
+
+  /* ------------------ LOAD MOVIE SECTIONS ------------------ */
+  const loadMovieSections = async (pageNumber = 1) => {
+    if (sectionsLoading) return;
+
+    setSectionsLoading(true);
+
+    try {
+      const res = await httpClient.post(
+        "/page",
+        {
+          page: pageNumber,
+          limit: 10,
+          pageName: "Movie",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const newSections = res.data.data;
+      const more = res.data?.has_more ?? false;
+
+      setSections((prev) =>
+        pageNumber === 1 ? newSections : [...prev, ...newSections]
+      );
+
+      setHasMore(more);
+    } catch (error) {
+      console.error(error);
+      setHasMore(false);
+    } finally {
+      setSectionsLoading(false);
+    }
+  };
+
+  /* ------------------ INITIAL LOAD ------------------ */
+  useEffect(() => {
+    const init = async () => {
+      await loadMovieSections(1);
+      setInitialLoad(false);
+    };
+    init();
+  }, []);
+
+  /* ------------------ PAGINATION ------------------ */
+  useEffect(() => {
+    if (page === 1) return;
+    loadMovieSections(page);
+  }, [page]);
+
+  /* ------------------ INFINITE SCROLL ------------------ */
+  const lastSectionRef = useCallback(
+    (node) => {
+      if (sectionsLoading || !hasMore) return;
+
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setPage((prev) => prev + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [sectionsLoading, hasMore]
+  );
+
   return (
     <>
+      {initialLoad && <ShimmerLine loading />}
+
       <Header />
+
       <main className="main-content">
         <section className="page-header">
           <h1 className="page-title">Movie</h1>
           <p className="page-subtitle">Watch your favorite films anytime</p>
         </section>
 
-        <CartoonSlider istitleCard={false} isCard={true} />
-        <CartoonSlider istitleCard={false} isCard={true} />
-        <CartoonSlider istitleCard={false} isCard={true} />
-        <CartoonSlider istitleCard={false} isCard={true} />
-        <CartoonSlider istitleCard={false} isCard={true} />
+        {sections.map((section, index) => {
+          const isTitleCard = Number(section.Is_title_Card) === 1;
+
+          const slider = (
+            <CartoonSlider
+              heading={section.Name}
+              cartoons={section.Videos}
+              istitleCard={isTitleCard}
+              isCard={!isTitleCard}
+            />
+          );
+
+          if (index === sections.length - 1) {
+            return (
+              <div ref={lastSectionRef} key={index}>
+                {slider}
+              </div>
+            );
+          }
+
+          return <div key={index}>{slider}</div>;
+        })}
+
+        {sectionsLoading && <ShimmerLine loading />}
       </main>
+
       <Footer />
     </>
   );

@@ -512,7 +512,25 @@
     opacity: 0.2;
   }
 }
+@media (max-width: 1244px) {
+  .nav-item a{
+    font-size: 12px;
+  }
+  .nav-menu {
+    /* display: flex; */
+    gap: 1px;
+    /* list-style: none; */
+}
+.logo-text {
+    font-size: 20px;
 
+}
+}
+@media (max-width: 770px) {
+  .logo-text {
+    font-size: 100%;
+  }
+}
 @media (max-width: 375px) {
   .login-card {
     padding: 30px 20px;
@@ -523,10 +541,6 @@
     height: 50px;
     font-size: 24px;
   } */
-
-  .logo-text {
-    font-size: 22px;
-  }
 }
 
 /* Accessibility */

@@ -9,20 +9,14 @@ const TitleCard = ({ cartoon }) => {
       <div className="tc-imageWrapper">
         <img
           src={cartoon.image}
-          alt={cartoon.title}
+          alt={cartoon.Title}
           className="tc-image"
         />
       </div>
       </Link>
 
         <div className="tc-content">
-        <h3 className="tc-title p-2">{cartoon.title}</h3>
-        {/* <p className="card-meta">
-          {cartoon.year} • {cartoon.genre}
-        </p> */}
-        {/* <p className="card-description">
-          {cartoon.description}
-        </p> */}
+        <h3 className="tc-title p-2">{cartoon.Title}</h3>
       </div>
     </div>
   );

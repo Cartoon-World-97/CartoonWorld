@@ -17,7 +17,7 @@ const Card = ({ cartoon }) => {
       <div className="image-wrapper">
         <img
           src={cartoon.image}
-          alt={cartoon.title}
+          alt={cartoon.Title}
           className="cartoon-image"
         />
         {/* <div className="play-button">

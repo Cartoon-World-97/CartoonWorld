@@ -20,6 +20,12 @@ import { SearchProvider } from "./context/SearchContext";
 import Profile from "./Pages/Profile";
 import Movie from "./Pages/Movie";
 import Playlist from "./Pages/Playlist";
+import Payment from "./Pages/Payment";
+import Plans from "./Pages/Plans";
+import { ToastContainer } from "react-toastify";
+import LoginValidater from "./utility/LoginValidater";
+
+// In your App component
 
 function App() {
   const router = createBrowserRouter([
@@ -27,10 +33,8 @@ function App() {
       path: "/",
       element: (
         <>
-          <ProtectedRoute>
-            <Scrolltotop />
-            <Home />
-          </ProtectedRoute>
+          <Scrolltotop />
+          <Home />
         </>
       ),
     },
@@ -61,7 +65,7 @@ function App() {
         </ProtectedRoute>
       ),
     },
-     {
+    {
       path: "/movie",
       element: (
         <ProtectedRoute>
@@ -71,11 +75,7 @@ function App() {
     },
     {
       path: "/mylist",
-      element: (
-        <ProtectedRoute>
-          <Playlist />
-        </ProtectedRoute>
-      ),
+      element: <Playlist />,
     },
     {
       path: "/category",
@@ -85,20 +85,33 @@ function App() {
         </ProtectedRoute>
       ),
     },
-     {
-      path: "/payments",
+    {
+      path: "/Testpayments",
       element: (
         <ProtectedRoute>
           <PayPalButton />
         </ProtectedRoute>
       ),
-    },{
-      path: "/profile",
+    },
+    {
+      path: "/payments/:id",
       element: (
         <ProtectedRoute>
-          <Profile />
+          <Payment />
         </ProtectedRoute>
       ),
+    },
+    {
+      path: "/plans",
+      element: (
+        <ProtectedRoute>
+          <Plans />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
     },
     {
       path: "/video/:id",
@@ -111,11 +124,19 @@ function App() {
 
     {
       path: "/signin",
-      element: <Signin />,
+      element: (
+        <LoginValidater>
+          <Signin />
+        </LoginValidater>
+      ),
     },
     {
       path: "/signup",
-      element: <Signup />,
+      element: (
+        <LoginValidater>
+          <Signup />
+        </LoginValidater>
+      ),
     },
     {
       path: "/login",
@@ -123,19 +144,39 @@ function App() {
     },
     {
       path: "/forgotpass",
-      element: <Forgetpassword />,
+      element: (
+        <LoginValidater>
+          <Forgetpassword />
+        </LoginValidater>
+      ),
     },
     {
       path: "/resetpassword",
-      element: <Setpass />,
+       element: (
+        <LoginValidater>
+           <Setpass />
+        </LoginValidater>
+      ),
     },
   ]);
-
-  // return <RouterProvider router={router} />
   return (
-    <SearchProvider>
-      <RouterProvider router={router} />
-    </SearchProvider>
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <SearchProvider>
+        <RouterProvider router={router} />
+      </SearchProvider>
+    </>
   );
 }
 
