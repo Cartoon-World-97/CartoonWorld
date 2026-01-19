@@ -3,7 +3,6 @@ import Search from "./Pages/Search";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Home from "./Pages/Home";
-// const Home = lazy(() => import("./pages/Home"));
 import Login from "./Pages/Login";
 import Tvshows from "./Pages/Tvshows";
 import Category from "./Pages/Category";
