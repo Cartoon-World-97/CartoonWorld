@@ -36,7 +36,7 @@ const Signin = () => {
   setIsLoading(true);
     try {
       const res = await axios.post(
-        import.meta.env.VITE_API_URL + "/auth/register",
+        import.meta.env.VITE_API_URL + "auth/register",
         loginForm,
         {
           headers: { "Content-Type": "application/json", Authxxxxx: "XYZ" },
