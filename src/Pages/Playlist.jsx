@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Card from "../components/PlaylistCard/Card";
-import ShimmerCard from "../utility/ShimmerCard";
 import ShimmerLine from "../utility/ShimmerLine";
 import httpClient from "../services/httpClient";
 import useLogin from "../hooks/Login";
@@ -13,49 +13,33 @@ import useLogin from "../hooks/Login";
 const Playlist = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [deleting, setDeleting] = useState(null); // Track which video is being deleted
+  const [deleting, setDeleting] = useState(null);
+
   const navigate = useNavigate();
   const isLogin = useLogin();
 
   // Fetch playlist
   useEffect(() => {
-    // Only fetch if user is logged in
     if (!isLogin) {
       setLoading(false);
       return;
     }
 
     const fetchPlaylist = async () => {
-      setLoading(true);
       try {
+        setLoading(true);
         const response = await httpClient.post("/videoList");
-        
-        // Handle response structure - API returns 'videos' array
-        if (response.data.status && response.data.videos) {
+
+        if (response.data?.videos) {
           setVideos(response.data.videos);
-        } else if (response.data.content) {
-          setVideos(response.data.content);
-        } else if (response.data.results) {
-          setVideos(response.data.results);
-        } else if (response.data.Vidoes) {
-          setVideos(response.data.Vidoes);
         } else if (Array.isArray(response.data)) {
           setVideos(response.data);
         } else {
           setVideos([]);
         }
       } catch (error) {
-        console.error("Error fetching playlist:", error);
-        
-        // Check if error is due to authentication
-        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-          // Token invalid or expired, clear storage
-          localStorage.removeItem("token");
-          sessionStorage.removeItem("token");
-          toast.error("Session expired. Please login again.");
-        } else {
-          toast.error("Failed to load playlist");
-        }
+        console.error(error);
+        toast.error("Failed to load playlist");
         setVideos([]);
       } finally {
         setLoading(false);
@@ -65,126 +49,62 @@ const Playlist = () => {
     fetchPlaylist();
   }, [isLogin]);
 
-  // Perform the actual deletion
+  // Delete API call
   const performDelete = async (videoId) => {
     setDeleting(videoId);
-    
     try {
       const response = await httpClient.post("/deleteList", {
-        "video_Id": videoId
+        video_Id: videoId,
       });
 
-      // Check if deletion was successful
-      if (response.data.status || response.status === 200) {
-        // Remove video from local state
-        setVideos(prevVideos => prevVideos.filter(video => video.Video_ID !== videoId));
-        
-        // Show success toast
-        toast.success("Video removed from playlist successfully!");
+      if (response.data?.status) {
+        setVideos((prev) =>
+          prev.filter((v) => v.Video_ID !== videoId)
+        );
+        toast.success("Video removed from playlist");
       } else {
-        console.error("Failed to delete video:", response.data.message);
-        toast.error("Failed to remove video from playlist. Please try again.");
+        toast.error("Delete failed");
       }
     } catch (error) {
-      console.error("Error deleting video:", error);
-      
-      // Check if error is due to authentication
-      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-        localStorage.removeItem("token");
-        sessionStorage.removeItem("token");
-        toast.error("Session expired. Please login again.");
-        navigate("/signin");
-      } else {
-        toast.error("An error occurred while removing the video. Please try again.");
-      }
+      console.error(error);
+      toast.error("Something went wrong");
     } finally {
       setDeleting(null);
     }
   };
 
-  // Handle delete video with toast confirmation
+  // Confirmation toast
   const handleDelete = (videoId) => {
     toast.warn(
       ({ closeToast }) => (
         <div>
-          <p style={{ marginBottom: '15px', fontSize: '14px', fontWeight: '500' }}>
-            Are you sure you want to remove this video from your playlist?
+          <p style={{ marginBottom: 12 }}>
+            Remove this video from playlist?
           </p>
-          <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-            <button
-              onClick={() => {
-                closeToast();
-              }}
-              style={{
-                padding: '8px 16px',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                borderRadius: '5px',
-                color: '#fff',
-                cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '500',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = 'rgba(255, 255, 255, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = 'rgba(255, 255, 255, 0.1)';
-              }}
-            >
-              Cancel
-            </button>
+          <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+            <button onClick={closeToast}>Cancel</button>
             <button
               onClick={() => {
                 performDelete(videoId);
                 closeToast();
               }}
-              style={{
-                padding: '8px 16px',
-                background: '#ff3b30',
-                border: 'none',
-                borderRadius: '5px',
-                color: '#fff',
-                cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '500',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = '#e03228';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = '#ff3b30';
-              }}
+              style={{ background: "#ff3b30", color: "#fff" }}
             >
               Delete
             </button>
           </div>
         </div>
       ),
-      {
-        position: "top-center",
-        autoClose: false,
-        closeButton: false,
-        draggable: false,
-        closeOnClick: false,
-        icon: "⚠️"
-      }
+      { autoClose: false, closeButton: false }
     );
-  };
-
-  // Handle login button click
-  const handleLoginClick = () => {
-    navigate("/signin");
   };
 
   return (
     <>
-      {loading && <ShimmerLine loading={loading} />}
-      
+      {loading && <ShimmerLine loading />}
+
       <Header />
-      
+
       <main className="main-content">
         <section className="page-header">
           <h1 className="page-title">My Playlist</h1>
@@ -193,53 +113,34 @@ const Playlist = () => {
           </p>
         </section>
 
+        {/* NOT LOGGED IN */}
+        {!isLogin && (
+          <div className="empty-state">
+            <p>Please login to view your playlist</p>
+            <button onClick={() => navigate("/signin")}>Login</button>
+          </div>
+        )}
+
+        {/* EMPTY PLAYLIST */}
+        {isLogin && !loading && videos.length === 0 && (
+          <div className="empty-state">
+            <p>Your playlist is empty</p>
+          </div>
+        )}
+
+        {/* PLAYLIST GRID */}
         <section className="videos-grid">
-          {loading ? (
-            // Show shimmer cards while loading
-            [...Array(12)].map((_, index) => (
-              <ShimmerCard key={index} />
-            ))
-          ) : !isLogin ? (
-            // Show login button when not logged in
-            <div className="text-center" style={{ gridColumn: '1 / -1' }}>
-              <button 
-                onClick={handleLoginClick}
-                className="login-btn"
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-3px)';
-                  e.target.style.boxShadow = '0 15px 40px rgba(255, 107, 107, 0.6)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 10px 30px rgba(255, 107, 107, 0.4)';
-                }}
-              >
-                Login
-              </button>
-            </div>
-          ) : videos.length === 0 ? (
-            // Show empty state when logged in but no videos
-            <div className="text-center py-5" style={{ gridColumn: '1 / -1' }}>
-              <i className="fas fa-list" style={{ fontSize: '4rem', color: 'rgba(255, 255, 255, 0.3)', marginBottom: '20px' }}></i>
-              <p className="no-results">Your playlist is empty.</p>
-              <p style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.9rem' }}>
-                Start adding your favorite videos to see them here!
-              </p>
-            </div>
-          ) : (
-            // Display playlist videos
-            videos.map((video) => (
-              <Card 
-                key={video.Video_ID} 
-                cartoon={video} 
-                onDelete={handleDelete}
-                isDeleting={deleting === video.Video_ID}
-              />
-            ))
-          )}
+          {videos.map((video) => (
+            <Card
+              key={video.Video_ID}
+              cartoon={video}
+              onDelete={() => handleDelete(video.Video_ID)}
+              deleting={deleting === video.Video_ID}
+            />
+          ))}
         </section>
       </main>
-      
+
       <Footer />
     </>
   );
