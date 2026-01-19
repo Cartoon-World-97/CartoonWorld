@@ -22,7 +22,7 @@ const ForgotPassword = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("http://127.0.0.1:5000/auth/resetpass", { email:email },
+      const res = await axios.post(import.meta.env.VITE_API_URL + "/auth/resetpass", { email:email },
           {
           headers: { "Content-Type": "application/json", Authxxxxx: "XYZ" },
         }

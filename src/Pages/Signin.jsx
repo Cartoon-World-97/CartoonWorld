@@ -34,7 +34,7 @@ const Signin = () => {
     setIsLoading(true);
     try {
       const res = await axios.post(
-        "http://127.0.0.1:5000/auth/login",
+        import.meta.env.VITE_API_URL + "/auth/login",
         loginForm,
         {
           headers: { "Content-Type": "application/json", Authxxxxx: "XYZ" },

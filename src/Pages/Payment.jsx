@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 const Payment = () => {
   const paypalRef = useRef(null);
-  const { id } = useParams(); // PRG1001
+  const { id } = useParams();
 
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ const Payment = () => {
 
     const fetchPlanDetails = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:5000/plans/details", {
+        const res = await fetch(import.meta.env.VITE_API_URL + "/plans/details", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const Payment = () => {
       window.paypal
         .Buttons({
           createOrder: async () => {
-            const res = await fetch("http://127.0.0.1:5000/payments/", {
+            const res = await fetch(import.meta.env.VITE_API_URL + "/payments/", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -75,7 +75,7 @@ const Payment = () => {
 
           onApprove: async (data) => {
             await fetch(
-              `http://127.0.0.1:5000/payments/capture/${data.orderID}`,
+              `${import.meta.env.VITE_API_URL}/payments/capture/${data.orderID}`,
               {
                 method: "POST",
                 headers: {
