@@ -9,7 +9,6 @@ import Tvshows from "./Pages/Tvshows";
 import Category from "./Pages/Category";
 import Signin from "./Pages/Signin";
 import Signup from "./Pages/Signup";
-import PayPalButton from "./Pages/testpayments";
 import Forgetpassword from "./Pages/Forgetpassword";
 import Setpass from "./Pages/Setpass";
 import Video from "./Pages/Video";
@@ -82,14 +81,6 @@ function App() {
       element: (
         <ProtectedRoute>
           <Category />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: "/Testpayments",
-      element: (
-        <ProtectedRoute>
-          <PayPalButton />
         </ProtectedRoute>
       ),
     },
