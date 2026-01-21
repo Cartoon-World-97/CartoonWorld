@@ -22,7 +22,7 @@ import Payment from "./Pages/Payment";
 import Plans from "./Pages/Plans";
 import { ToastContainer } from "react-toastify";
 import LoginValidater from "./utility/LoginValidater";
-
+import PrivacyPolicy from "./Pages/PrivacyPolicy";
 // In your App component
 
 function App() {
@@ -138,6 +138,12 @@ function App() {
         <LoginValidater>
           <Forgetpassword />
         </LoginValidater>
+      ),
+    },
+     {
+      path: "/privacy-policy",
+      element: (
+          <PrivacyPolicy />
       ),
     },
     {
