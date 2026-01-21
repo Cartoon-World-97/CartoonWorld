@@ -28,7 +28,7 @@ const Footer = () => {
         <div className="col-lg-3 footer-section">
           <h5>Legal</h5>
           <ul>
-            <li><NavLink to="#">Privacy Policy</NavLink></li>
+            <li><NavLink to="/privacy-policy">Privacy Policy</NavLink></li>
             <li><NavLink to="#">Terms of Service</NavLink></li>
             <li><NavLink to="#">Cookie Policy</NavLink></li>
             <li><NavLink to="#">DMCA</NavLink></li>
