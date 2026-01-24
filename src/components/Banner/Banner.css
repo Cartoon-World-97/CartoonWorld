@@ -219,7 +219,7 @@
 
 @media (max-width: 480px) {
   .hero-banner {
-    height: 40vh;
+    height: 100vh;
   }
 
   .hero-title {
