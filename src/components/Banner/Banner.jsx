@@ -87,7 +87,7 @@ const Banner = ({ banner = [] }) => {
 
         {/* Content */}
         <div className="hero-content">
-          <h1 className="hero-title">{currentSlide?.Title}</h1>
+          <h2 className="hero-title">{currentSlide?.Title}</h2>
           <p className="hero-description">{currentSlide?.Description}</p>
 
           <div className="hero-buttons">
