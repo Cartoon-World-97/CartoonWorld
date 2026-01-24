@@ -100,7 +100,7 @@ const Header = () => {
         {/* Logo */}
         <div className="logo" onClick={() => navigate("/")}>
           <img src="/short_logo.png" className="logo-img" alt="" />
-          <div className="logo-text">Cartoon World</div>
+          <h1 className="logo-text">Cartoon World</h1>
         </div>
 
         {/* Navigation */}
