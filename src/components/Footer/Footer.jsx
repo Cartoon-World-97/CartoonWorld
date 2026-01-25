@@ -45,7 +45,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2024 Cartoon World. All rights reserved. | Designed with JioHoster inspiration</p>
+        <p>&copy; 2024 Cartoon World. All rights reserved.</p>
       </div>
     </div>
   </footer>
