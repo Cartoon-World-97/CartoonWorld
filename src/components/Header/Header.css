@@ -93,6 +93,28 @@ position: sticky;
   transform: translateY(-2px);
 }
 
+.nav-menu-2 {
+  gap: 30px;
+  list-style: none;
+}
+
+.nav-item-2 a {
+  color: rgba(26, 25, 25, 0.8);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-item-2 a:hover,
+.nav-item-2 a.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
 .search-bar {
   display: flex;
   align-items: center;
@@ -231,3 +253,46 @@ position: sticky;
   position: relative;
 }
 
+
+/* sidebar background */
+.offcanvas {
+  background: #111;
+  color: white;
+  width: 260px;
+}
+
+/* menu container */
+.nav-menu-2 {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+/* menu item spacing */
+.nav-item-2 {
+  margin-bottom: 10px;
+}
+
+/* link style */
+.nav-item-2 a {
+  display: block;
+  padding: 12px 18px;
+  text-decoration: none;
+  color: #ddd;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+/* hover effect */
+.nav-item-2 a:hover {
+  background: #ff3d3d;
+  color: white;
+  padding-left: 24px;
+}
+
+/* active page */
+.nav-item-2 a.active {
+  background: #ff3d3d;
+  color: white;
+}
