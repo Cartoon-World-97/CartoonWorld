@@ -89,119 +89,140 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const closeMenu = () => {
+    const offcanvas = document.querySelector(".offcanvas.show");
+
+    if (offcanvas && window.bootstrap) {
+      const bsOffcanvas = window.bootstrap.Offcanvas.getInstance(offcanvas);
+      if (bsOffcanvas) {
+        bsOffcanvas.hide();
+      }
+    }
+  };
+
   const Logout = () => {
     localStorage.removeItem("Jwttoken");
     navigate("/signin");
   };
 
   return (
-    <header className={`header main-header ${isScrolled ? "scrolled" : ""}`}>
-      <div className="header-content">
-        {/* Logo */}
-        <div className="logo" onClick={() => navigate("/")}>
-          <img src="/short_logo.png" className="logo-img" alt="" />
-          <h1 className="logo-text">Cartoon World</h1>
-        </div>
+    <>
+      <header className={`header main-header ${isScrolled ? "scrolled" : ""}`}>
+        <div className="header-content">
+          {/* Logo */}
+          <div className="logo" onClick={() => navigate("/")} >
+            {/* <p className="text-white mx-4 ball"> */}
+            <button className="navbar-toggler d-block d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+              <span className="fa-solid fa-align-left"></span>
+            </button>
 
-        {/* Navigation */}
-        <nav>
-          <ul className="nav-menu">
-            <li className="nav-item">
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/movie">Movies</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/tvshows">TV Shows</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/category">Categories</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/mylist">My List</NavLink>
-            </li>
-          </ul>
-        </nav>
+            {/* </p> */}
+            {/* <div > */}
+            <img src="/short_logo.png" className="logo-img" alt="" />
+            <div className="logo-text">Cartoon World</div>
+            {/* </div> */}
 
-        {/* Search */}
-        <form onSubmit={handleSearch} className="search-wrapper d-none d-sm-block">
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search for movies, shows..."
-              value={query}
-              onInput={(e) => handleInput(e.target.value)}
-              onFocus={() => {
-                if (query.trim() === "") {
-                  fetchSuggestions(""); // Only fetch history when empty
-                }
-                setShowSuggestions(true);
-              }}
-            />
-
-            <i className="fas fa-search" onClick={handleSearch}></i>
           </div>
 
-          {/* 🔥 Suggestions Dropdown */}
-          {showSuggestions && suggestions.length > 0 && (
-            <ul className="suggestion-box">
-              {suggestions.map((item, index) => (
-                <li
-                  key={index}
-                  onClick={() => {
-                    setQuery(item); // Auto-fill
-                    setSearchQuery(item);
-                    navigate("/search"); // Search immediately
-                    setShowSuggestions(false);
-                  }}
-                >
-                  <i className="fa-solid fa-clock-rotate-left pe-2"></i> {item}
-                </li>
-              ))}
+          {/* Navigation */}
+          <nav>
+            <ul className="nav-menu">
+              <li className="nav-item">
+                <NavLink to="/">Home</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/movie">Movies</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/tvshows">TV Shows</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/category">Categories</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/mylist">My List</NavLink>
+              </li>
             </ul>
-          )}
-        </form>
+          </nav>
 
-        {/* User Actions */}
-        <div className="user-actions">
-          {/* <button className="notification-btn">
+          {/* Search */}
+          <form onSubmit={handleSearch} className="search-wrapper d-none d-sm-block">
+            <div className="search-bar">
+              <input
+                type="text"
+                placeholder="Search for movies, shows..."
+                value={query}
+                onInput={(e) => handleInput(e.target.value)}
+                onFocus={() => {
+                  if (query.trim() === "") {
+                    fetchSuggestions(""); // Only fetch history when empty
+                  }
+                  setShowSuggestions(true);
+                }}
+              />
+
+              <i className="fas fa-search" onClick={handleSearch}></i>
+            </div>
+
+            {/* 🔥 Suggestions Dropdown */}
+            {showSuggestions && suggestions.length > 0 && (
+              <ul className="suggestion-box">
+                {suggestions.map((item, index) => (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      setQuery(item); // Auto-fill
+                      setSearchQuery(item);
+                      navigate("/search"); // Search immediately
+                      setShowSuggestions(false);
+                    }}
+                  >
+                    <i className="fa-solid fa-clock-rotate-left pe-2"></i> {item}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </form>
+
+          {/* User Actions */}
+          <div className="user-actions">
+            {/* <button className="notification-btn">
             <i className="fas fa-bell"></i>
           </button> */}
 
-          {!isLogin && (
+            {!isLogin && (
               <Link to="/signin" className="login-btn text-decoration-none">
-              Login
-            </Link>
-          )}
-              {isLogin && (
-            <div className="profile-dropdown dropdown">
-              <button
-                className="profile-btn profile-icon"
-                data-bs-toggle="dropdown"
-              >
-                <i className="fas fa-user"></i>
-              </button>
-              <ul className="dropdown-menu">
-                <li>
-                  <button className="dropdown-item">
-                    <Link to="/profile" className="text-decoration-none text-white">
-                      <i className="fa-solid fa-circle-user me-2"></i> Profile
-                    </Link>
-                  </button>
-                </li>
-                <li>
-                  <button className="dropdown-item" onClick={Logout}>
-                    <i className="fa-solid fa-arrow-right-from-bracket"></i>{" "}
-                    Logout
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
+                Login
+              </Link>
+            )}
+            {isLogin && (
+              <div className="profile-dropdown dropdown">
+                <button
+                  className="profile-btn profile-icon"
+                  data-bs-toggle="dropdown"
+                >
+                  <i className="fas fa-user"></i>
+                </button>
+                <ul className="dropdown-menu">
+                  <li>
+                    <button className="dropdown-item">
+                      <Link to="/profile" className="text-decoration-none text-white">
+                        <i className="fa-solid fa-circle-user me-2"></i> Profile
+                      </Link>
+                    </button>
+                  </li>
+                  <li>
+                    <button className="dropdown-item" onClick={Logout}>
+                      <i className="fa-solid fa-arrow-right-from-bracket"></i>{" "}
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-      <form onSubmit={handleSearch} className="search-wrapper d-block d-sm-none ">
+        <form onSubmit={handleSearch} className="search-wrapper d-block d-sm-none ">
           <div className="search-bar mx-3 my-2">
             <input
               type="text"
@@ -238,7 +259,56 @@ const Header = () => {
             </ul>
           )}
         </form>
-    </header>
+
+      </header>
+
+      <div className="offcanvas offcanvas-start" tabIndex={-1} id="offcanvasNavbar">
+        <div className="offcanvas-header">
+          <h3 className="offcanvas-title text-shadow">Menu</h3>
+          <button
+            type="button"
+            className="btn-close text-white"
+            data-bs-dismiss="offcanvas"
+          ></button>
+        </div>
+
+        <div className="offcanvas-body">
+          <ul className="nav-menu-2">
+            <li className="nav-item-2">
+              <NavLink to="/" onClick={closeMenu}>
+                Home
+              </NavLink>
+            </li>
+
+            <li className="nav-item-2">
+              <NavLink to="/movie" onClick={closeMenu}>
+                Movies
+              </NavLink>
+            </li>
+
+            <li className="nav-item-2">
+              <NavLink to="/tvshows" onClick={closeMenu}>
+                TV Shows
+              </NavLink>
+            </li>
+
+            <li className="nav-item-2">
+              <NavLink to="/category" onClick={closeMenu}>
+                Categories
+              </NavLink>
+            </li>
+
+            <li className="nav-item-2">
+              <NavLink to="/mylist" onClick={closeMenu}>
+                My List
+              </NavLink>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+    </>
   );
 };
 
