@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const TitleCard = ({ cartoon }) => {
   return (
     <div className="tc-card">
-      <Link to ={`/video?Id=${cartoon.Video_ID}`}>
+      <Link to ={`/video/${cartoon.Video_ID}`}>
       <div className="tc-imageWrapper">
         <img
           src={cartoon.image}
