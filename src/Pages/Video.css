@@ -6,6 +6,7 @@
   overflow: hidden;
   background: #000;
   margin-bottom: 20px;
+  height: 221px;
 }
 .video-iframe {
   position: absolute;
