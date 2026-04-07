@@ -8,4 +8,15 @@
 .videos-grid .cartoon-card {
   max-width: 160px;
 }
-
+@media (max-width: 768px) {
+  .videos-grid {
+    grid-template-columns: auto auto auto;
+    gap: 1.5rem;
+  }
+}
+@media (max-width: 480px) {
+  .videos-grid {
+    grid-template-columns: auto auto;
+    gap: 1rem;
+  }
+}
