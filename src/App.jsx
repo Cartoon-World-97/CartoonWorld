@@ -50,25 +50,19 @@ function App() {
     {
       path: "/search",
       element: (
-        <ProtectedRoute>
           <Search />
-        </ProtectedRoute>
       ),
     },
     {
       path: "/tvshows",
       element: (
-        <ProtectedRoute>
           <Tvshows />
-        </ProtectedRoute>
       ),
     },
     {
       path: "/movie",
       element: (
-        <ProtectedRoute>
           <Movie />
-        </ProtectedRoute>
       ),
     },
     {
@@ -78,9 +72,7 @@ function App() {
     {
       path: "/category",
       element: (
-        <ProtectedRoute>
           <Category />
-        </ProtectedRoute>
       ),
     },
     {
@@ -94,9 +86,7 @@ function App() {
     {
       path: "/plans",
       element: (
-        <ProtectedRoute>
           <Plans />
-        </ProtectedRoute>
       ),
     },
     {
@@ -106,9 +96,7 @@ function App() {
     {
       path: "/video/:id",
       element: (
-        <ProtectedRoute>
           <Video />
-        </ProtectedRoute>
       ),
     },
 

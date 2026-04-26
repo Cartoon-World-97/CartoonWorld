@@ -17,6 +17,9 @@ const Playlist = () => {
 
   const navigate = useNavigate();
   const isLogin = useLogin();
+    const handleLoginClick = () => {
+    navigate("/signin");
+  };
 
   // Fetch playlist
   useEffect(() => {
@@ -106,26 +109,34 @@ const Playlist = () => {
       <Header />
 
       <main className="main-content">
+        
+
+        {/* NOT LOGGED IN */}
+        {!isLogin && (
+         <div className="profile-login-prompt">
+            <i className="fas fa-user-lock"></i>
+            <h2>Please Login to View playlist</h2>
+            <p>Sign in to access your playlists and watch videos</p>
+            <button className="login-btn" onClick={handleLoginClick}>
+              Login
+            </button>
+          </div>
+        )}
+
+        {/* EMPTY PLAYLIST */}
+        {isLogin && !loading && videos.length === 0 && (<>
         <section className="page-header">
           <h1 className="page-title">My Playlist</h1>
           <p className="page-subtitle">
             Enjoy your curated collection of favorites
           </p>
         </section>
-
-        {/* NOT LOGGED IN */}
-        {!isLogin && (
-          <div className="empty-state">
-            <p>Please login to view your playlist</p>
-            <button onClick={() => navigate("/signin")}>Login</button>
-          </div>
-        )}
-
-        {/* EMPTY PLAYLIST */}
-        {isLogin && !loading && videos.length === 0 && (
-          <div className="empty-state">
+         <div className="empty-state">
             <p>Your playlist is empty</p>
           </div>
+        </>
+          
+         
         )}
 
         {/* PLAYLIST GRID */}

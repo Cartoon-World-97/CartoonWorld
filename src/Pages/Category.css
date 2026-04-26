@@ -10,14 +10,14 @@
   margin-bottom: 5px;
 }
 
-.section-title {
+/* .section-title {
   font-size: 1.5rem;
   font-weight: 700;
   color: #ffffff;
   position: relative;
-}
+} */
 
-.section-title::before {
+/* .section-title::before {
   content: "";
   position: absolute;
   left: -10px;
@@ -27,7 +27,7 @@
   height: 30px;
   background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
   border-radius: 2px;
-}
+} */
 
 .view-all {
   color: #777171;

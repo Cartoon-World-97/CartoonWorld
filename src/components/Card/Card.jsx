@@ -20,24 +20,7 @@ const Card = ({ cartoon }) => {
           alt={cartoon.Title}
           className="cartoon-image"
         />
-        {/* <div className="play-button">
-          <Play size={24} fill="white" color="white" style={{ marginLeft: '3px' }} />
-        </div>
-        <div className="rating-badge">
-          <span className="star">⭐</span>
-          <span>{cartoon.rating}</span>
-        </div> */}
       </div>
-
-      {/* <div className="card-content">
-        <h3 className="card-title">{cartoon.title}</h3>
-        <p className="card-meta">
-          {cartoon.year} • {cartoon.genre}
-        </p>
-        <p className="card-description">
-          {cartoon.description}
-        </p>
-      </div> */}
     </Link>
     </div>
   );

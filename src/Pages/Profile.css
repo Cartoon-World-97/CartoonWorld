@@ -160,10 +160,9 @@
 
 /* Section Title */
 .section-title {
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 30px;
+  color: #ebebeb;
   display: flex;
   align-items: center;
   gap: 15px;

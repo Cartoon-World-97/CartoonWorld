@@ -62,6 +62,7 @@ const Home = () => {
     } finally {
       setBannerLoading(false);
     }
+
   };
 
   /* ------------------ INITIAL LOAD ------------------ */
@@ -69,6 +70,7 @@ const Home = () => {
     const init = async () => {
       await Promise.all([loadBanner(), loadHomeSections(1)]);
       setInitialLoad(false);
+      console.log(bannervideos)
     };
     init();
   }, []);

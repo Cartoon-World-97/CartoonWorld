@@ -7,6 +7,7 @@ import httpClient from "../../services/httpClient";
 
 const Banner = ({ banner = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   /* ---------------- ADD TO PLAYLIST ---------------- */
   const playlistadd = async (videoId) => {
@@ -23,7 +24,7 @@ const Banner = ({ banner = [] }) => {
         toast.error(response.data?.message || "Failed to add");
       }
     } catch (error) {
-      toast.error("Error while adding video");
+      toast.error("An error occurred while adding the video.");
     }
   };
 
@@ -51,10 +52,14 @@ const Banner = ({ banner = [] }) => {
   };
 
   const currentSlide = banner[currentIndex];
-  const videoId = currentSlide?.Video_ID;
+  const videoId = currentSlide?.Video_ID; // ✅ use ONE key
 
   return (
-    <section className="hero-banner">
+    <section
+      className="hero-banner"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div
         className="hero-slide"
         style={{
@@ -65,26 +70,33 @@ const Banner = ({ banner = [] }) => {
       >
         <div className="hero-overlay" />
 
+        {/* Navigation */}
+        <button
+          className={`hero-nav hero-nav-left ${isHovered ? "visible" : ""}`}
+          onClick={goToPrevious}
+        >
+          <ChevronLeft size={26} />
+        </button>
+
+        <button
+          className={`hero-nav hero-nav-right ${isHovered ? "visible" : ""}`}
+          onClick={goToNext}
+        >
+          <ChevronRight size={26} />
+        </button>
+
         {/* Content */}
         <div className="hero-content">
-
-          <h1 className="hero-title">{currentSlide?.Title}</h1>
-
-          {/* <div className="hero-meta">
-            <span>2026</span>
-            <span>U/A 7+</span>
-            <span>1h 21m</span>
-            <span>English</span>
-          </div> */}
-
-          <p className="hero-description">
-            {currentSlide?.Description}
-          </p>
+          <h2 className="hero-title">{currentSlide?.Title}</h2>
+          <p className="hero-description">{currentSlide?.Description}</p>
 
           <div className="hero-buttons">
-            <Link to={`/video/${videoId}`} className="btn-primary-banner">
+            <Link
+              to={`/video/${videoId}`}
+              className="btn-primary-banner"
+            >
               <Play size={18} fill="currentColor" />
-              Subscribe to Watch
+              Watch Now
             </Link>
 
             <button
@@ -92,40 +104,22 @@ const Banner = ({ banner = [] }) => {
               onClick={() => playlistadd(videoId)}
             >
               <Plus size={18} />
+              Add to List
             </button>
           </div>
         </div>
 
-        {/* 🔥 Thumbnails + Arrows */}
-        <div className="hero-thumbnails-wrapper">
-          
-          {/* Prev */}
-          <button className="thumb-nav left" onClick={goToPrevious}>
-            <ChevronLeft size={20} />
-          </button>
-
-          {/* Thumbnails */}
-          <div className="hero-thumbnails">
-            {banner.map((item, index) => (
-              <div
-                key={index}
-                className={`thumb ${
-                  index === currentIndex ? "active" : ""
-                }`}
-                onClick={() => setCurrentIndex(index)}
-              >
-                <img
-                  src={item?.image || item?.Program_Img_Path}
-                  alt="thumb"
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Next */}
-          <button className="thumb-nav right" onClick={goToNext}>
-            <ChevronRight size={20} />
-          </button>
+        {/* Indicators */}
+        <div className="hero-indicators">
+          {banner.map((_, index) => (
+            <button
+              key={index}
+              className={`indicator ${
+                index === currentIndex ? "active" : ""
+              }`}
+              onClick={() => setCurrentIndex(index)}
+            />
+          ))}
         </div>
       </div>
     </section>
