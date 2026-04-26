@@ -70,7 +70,7 @@ const Video = () => {
             <i className="fas fa-user-lock"></i>
             <h2>Please login to watch this video</h2>
             <p>Sign in to access your account information and watch history</p>
-            <button className="login-btn" onClick={() => navigate("/login")}>
+            <button className="login-btn" onClick={() => navigate("/signin")}>
               Login
             </button>
           </div>

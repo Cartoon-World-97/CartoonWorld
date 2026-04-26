@@ -74,8 +74,21 @@ const Slider = ({ cartoons, heading, istitleCard, isCard }) => {
       <div className="section-header">
         <h2 className="section-title">{heading}</h2>
 
+        {/* <Link
+          href="all-video"
+          className="view-all"
+          cartoons ={cartoons}
+          style={{
+            opacity: isHovered ? 1 : 0,
+            transform: isHovered ? "translateX(0)" : "translateX(20px)",
+            transition: "all 0.3s ease",
+          }}
+        >
+          View All &gt;
+        </Link> */}
         <Link
-          href="#"
+          to="/all-video"
+          state={{ cartoons }}
           className="view-all"
           style={{
             opacity: isHovered ? 1 : 0,
@@ -138,9 +151,8 @@ const Slider = ({ cartoons, heading, istitleCard, isCard }) => {
               key={cartoon.Video_ID}
               className="slide-item"
               style={{
-                flex: `0 0 calc(${100 / itemsPerView}% - ${
-                  (20 * (itemsPerView - 1)) / itemsPerView
-                }px)`,
+                flex: `0 0 calc(${100 / itemsPerView}% - ${(20 * (itemsPerView - 1)) / itemsPerView
+                  }px)`,
               }}
             >
               {isCard && <Card cartoon={cartoon} />}
