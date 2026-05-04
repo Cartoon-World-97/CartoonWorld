@@ -215,7 +215,7 @@
 /* Small Mobile */
 @media (max-width: 480px) {
   .hero-banner {
-    height: 60vh;
+    height: 350px;
   }
 
   .hero-title {
